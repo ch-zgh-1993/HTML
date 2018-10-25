@@ -1,0 +1,21 @@
+/*
+* @Author: Zhang Guohua
+* @Date:   2018-10-24 11:26:05
+* @Last Modified by:   zgh
+* @Last Modified time: 2018-10-25 14:07:03
+* @Description: create by zgh
+* @GitHub: Savour Humor
+*/
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+#canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}

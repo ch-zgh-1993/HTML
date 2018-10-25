@@ -1,0 +1,137 @@
+<!--
+* @Author: Zhang Guohua
+* @Date:   2018-10-24 11:23:01
+* @Last Modified by:   zgh
+* @Last Modified time: 2018-10-24 14:24:43
+* @Description: create by zgh
+* @GitHub: Savour Humor
+-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<link rel="stylesheet" type="text/css" href="base.css">
+	<style type="text/css">
+		#img {
+			width: 200px;
+			height: 200px;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="wrapper"><input type="file" height="500" width="500" name="upload" accept="image/jpeg, image/png"></div>
+	<canvas id="canvas"></canvas>
+
+	<img src="" id="img">
+<script type="text/javascript">
+	
+	// HTMLCanvasElement
+	// 
+	// 属性： 
+	// 		height, width
+	// 方法：
+	// 		getContext, toBolb, toDataURL
+	// 		
+	// 
+	// 	属性：		
+	// 高度如果不合法(整数，若为小数其实主流浏览器也会取 floor 渲染。若不为整数，则取 Number.负值有兼容性问题。)，将会使用CSS规范定义的，作为替换元素，默认为 300*150。 svg 也是如此。
+	// canvas 绘制与 css height无关。与 HTMl height 有关。
+	// 
+	// 方法：
+	// 		getContext(2d, wbgl/experimental-webgl, webgl2, bitmaprenderer): 获取<canvas>相关的可绘制的上下文。如果方法调用的参数是'2d'，则返回的是CanvasRenderingContext2D对象，如果参数是'webgl'（或者是'experimental-webgl'），则返回WebGLRenderingContext对象，当然，前提是浏览器需要支持WebGL，否则，返回值会是null。
+	// 			第二个参数为 options: ,返回值也是对应的options.
+	// 				2d: CanvasRenderingContext2D
+	// 				webgl: WebGLRenderingContext
+	// 				webgl2: WebGL2RenderingContext
+	// 				bitmaprenderer: ImageBitmapRenderingContext
+	// 				
+	// 				无论getContext()方法中的参数是什么，其返回值都可以称之为RenderingContext
+	// 		
+	// 		toDataURL:
+	// 			Canvas本质上就是一个位图图像; 此方法可以将canvas返回对应的 data URI, base64 地址。
+	// 			我们可以指定转换的图片格式，转换后的图像的分辨率为96 dPI。
+	// 			params: 
+	// 				mimeType: image/png, image/jpeg, image/webp;
+	// 				quality: 0~1;此参数要想有效，图片的mimeType需要是image/jpeg或者image/webp，其他mimeType值无效。默认压缩质量是0.92
+	// 			
+	// 			注意： 方法为同步方法，若canvas 尺寸很大，则会阻塞脚本运行。
+	// 			
+	// 			
+	// 		toBlob:
+	// 			此方法可以把Canvas图像缓存在磁盘上，或者存储在内存中，这个往往由浏览器决定。 无返回值。
+	// 			params:
+	// 				callback: 成功回掉，参数为 Blob
+	// 				mimeType: 同 dataURL
+	// 				quality: 同 dataURL
+	
+	const el = document.getElementById('canvas');
+
+	const canvas = el.getContext('2d');
+
+	// CanvasRenderingContext2D 对象详细信息。
+	console.log(canvas);
+
+	// toDataURL
+	console.log(el.toDataURL());
+	console.log(el.toDataURL('image/jpeg'));
+	// 检测浏览器支持 webp
+	console.log(el.toDataURL('image/webp'));
+
+
+	// Blob
+	// IMG 转为 Blob;
+	// 
+	!function(){
+		var input = document.getElementsByName('upload')[0];
+		input.addEventListener('change', function(event){	
+			
+			var target = event.target;
+			let file = target.files[0];
+			console.log(file)
+
+			// 生成预览图
+			// let url = window.URL.createObjectURL(file);
+			// let img = new Image();
+			// img.src = url;
+			// img.onload = function(){
+			// 	document.body.appendChild(img);
+			// };
+			// 
+			
+			let logo = new Image();
+			logo.src = 'zhang.png';
+
+			let read = new FileReader();
+			read.readAsDataURL(file);
+
+			read.onload = function(e){
+				console.log(e);
+				var base = e.target.result;
+
+				let cc = document.createElement('canvas');
+				let td = cc.getContext('2d');
+				// 新图片
+				let img2 = new Image();
+				img2.onload = function(){
+					td.drawImage(img2, 0, 0, 200, 200);
+					// logo 需要在同一个域名下，否则会发生跨域，污染画布。
+					td.drawImage(logo, 0, 0, 20, 20);
+
+
+					cc.toBlob(function(blob){	
+						let url = window.URL.createObjectURL(blob);
+						document.getElementById('img').src = url;
+					}, 'image/jpeg');
+				};
+				img2.src = base;
+
+			};
+
+		}, false);
+	}();
+
+
+</script>
+</body>
+</html>

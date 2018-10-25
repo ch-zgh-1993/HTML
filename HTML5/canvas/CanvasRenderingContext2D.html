@@ -1,0 +1,157 @@
+<!--
+* @Author: Zhang Guohua
+* @Date:   2018-10-24 14:32:41
+* @Last Modified by:   zgh
+* @Last Modified time: 2018-10-25 13:06:29
+* @Description: create by zgh
+* @GitHub: Savour Humor
+-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<link rel="stylesheet" type="text/css" href="base.css">
+	<style type="text/css">
+		body {
+			background: #fff;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+
+<script type="text/javascript">
+	const el = document.getElementById('canvas');
+	el.width = 1000;
+	el.height = 800;
+	const canvas = el.getContext('2d');
+
+	// CanvasRenderingContext2D
+	// 属性：
+	// 		
+	// 		canvas:
+	// 		
+	// 		fillStyle: 填充样式。 颜色， 渐变， 图片/纹理。
+	// 		strokeStyle: 描边样式。 可以是路径， 形状，文字的描边。可以是颜色， 渐变，图案。
+	// 		
+	// 		font: 字号， 字体。
+	// 		globalAlpha: 画布全局透明度。
+	// 		globalCompositeOperation: 混合模式。
+	// 		lineCap: butt, round, square
+	// 		lineDashOffset: 虚线偏移距离
+	// 		lineJoin: 线转角，miter, round, bevel;
+	// 		lineWidth:
+	// 		miterLimit: 规定线转角为 miter 时，出现尖角的长度范围。
+	// 		shadowBlur: 阴影模糊程度
+	// 		shadowColor: 阴影颜色
+	// 		shadowOffsetX: 阴影的偏移
+	// 		shadowOffsetY
+	// 		textAlign: 指定文本对齐方式。
+	// 		textBaseLine: 
+	// 		
+	// 方法：
+	// 		arc: 圆弧
+	// 			param: (x, y, radius, startAngle, endAngle [, anticlockwise]) 顺逆时针。
+	// 		arcTo: 给路径添加圆弧，需要控制点和半径。绘制的圆弧为正圆的一部分，绝不可能是椭圆的一部分。
+	// 			param: (x1, y1, x2, y2, radius);
+	// 			
+	// 		closePath: 闭合路径
+	// 		stroke: 对路径进行描边。即路径的颜色。
+	// 		fill: 是填充闭合路径的样式。
+	// 		
+	// 		
+	// 			
+	// 
+	
+
+	//////
+	// 属性测试 
+	// 
+	// 
+	//////
+	// fillStyle:
+	canvas.fillStyle = '#000';
+
+	// globalAlpha:
+	canvas.globalAlpha = 1;
+
+	// globalCompositeOperation:
+	// 原图 + 底图
+	// 
+
+	// lineCap: 
+	function createCap(){
+		let center = [50, 50];
+		let length = 40, offset = 30;
+
+		// 绘制
+		canvas.lineWidth = 4;
+		canvas.lineCap = 'round';
+		for(let angle = 0; angle < 360; angle += 15){
+			let sin = Math.sin(angle/180 * Math.PI);
+			let cos = Math.cos(angle/180 * Math.PI);
+
+			canvas.beginPath();
+
+			canvas.moveTo(center[0] + (center[0] - offset)*sin, center[1] - (center[1] - offset) * cos);
+			canvas.lineTo(center[0] + center[0]*sin, center[1] - center[1]* cos);
+			canvas.strokeStyle = `rgba(0, 0, 0, ${0.1 + angle*0.9/360})`;
+
+			canvas.stroke();
+		}
+	}	
+	createCap();
+
+
+	// lineDashOffset
+	function createLineDash(){
+		let offset = 0;
+		let draw = function(){
+			canvas.clearRect(0, 0, el.width, el.height);
+			canvas.setLineDash([10, 5]);
+			canvas.lineDashOffset = offset;
+			canvas.strokeRect(2, 2, 100, 100);
+		};
+		var run = function(){
+			offset += 0.5;
+			if(offset > 24){
+				offset = 0;
+			}
+			draw();
+			requestAnimationFrame(run);
+		};
+		run();
+	}
+	// createLineDash();
+
+
+	//////
+	// 方法测试 
+	// 
+	// 
+	//////
+
+
+	// arcTo:
+	function createArcTo(){
+		canvas.clearRect(0, 0, el.width, el.height);
+
+		canvas.moveTo(0, 100);
+		canvas.lineTo(el.width, 100);
+
+		// let start1 = [0, Math.floor(Math.random() * el.height)];
+		// let end1 = [Math.floor(Math.random()*el.height), el.width];
+
+		// canvas.strokeStyle = 'green';
+		// canvas.lineWidth = 0.1;
+		// canvas.fillStyle = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, ${Math.random()})`;
+		// canvas.arcTo(start1[0], start1[1], end1[0], end1[1], 200);
+		canvas.stroke();
+		// canvas.fill();
+		
+	}	
+	createArcTo();
+
+</script>
+</body>
+</html>
