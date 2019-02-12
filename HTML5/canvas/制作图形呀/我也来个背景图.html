@@ -2,7 +2,7 @@
 * @Author: Zhang Guohua
 * @Date:   2018-10-24 16:40:10
 * @Last Modified by:   zgh
-* @Last Modified time: 2018-10-25 14:23:28
+* @Last Modified time: 2019-02-12 17:21:59
 * @Description: create by zgh
 * @GitHub: Savour Humor
 -->
@@ -29,17 +29,22 @@
 
 <script type="text/javascript">
 	const el = document.getElementById('canvas');
-	el.width = 1900;
+	el.width = 1920;
 	el.height = 1100;
 	const bg = canvas.getContext('2d');
 
+	// 思路：
+	// 通过固定的A1, A2 去随机第三个点。 
+	// 绘制一个三角形。
+	// 废弃相对较小的 x, 保持三角形前进。
+	// 
 	let minWidth = 30;
-	let maxWidth = 150;
+	let maxWidth = 100;
 	let minHeight = 10;
-	let maxHeight = 120;
+	let maxHeight = 50;
 
 	function draw(){
-		bg.clearRect(0, 0, el.width, el.height);
+		el.height = el.height; 
 		let start = {
 			x: 0,
 			y: 750
@@ -54,8 +59,8 @@
 			bg.lineTo(P2.x, P2.y);
 			bg.lineTo(P3.x, P3.y);
 			bg.closePath();
-			bg.globalAlpha = Math.random()*0.3 + 0.3;
-			bg.fillStyle = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255})`;
+			bg.globalAlpha = 0.1;
+			bg.fillStyle = `rgb(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255})`;
 			bg.fill();
 		}
 
@@ -76,8 +81,8 @@
 
 		for(var i = 0; i < 50; i++){
 			let indexPoint = createPoint();
-			if(indexPoint.x === el.width) break;
 			drawClip(start, end, indexPoint);
+			if(indexPoint.x === el.width) break;
 			if(start.x < end.x){
 				start = end;
 			};
