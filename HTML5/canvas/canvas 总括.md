@@ -2,11 +2,42 @@
 * @Author: Zhang Guohua
 * @Date:   2019-02-12 17:22:11
 * @Last Modified by:   zgh
-* @Last Modified time: 2019-02-12 17:22:36
+* @Last Modified time: 2019-02-17 14:37:27
 * @Description: create by zgh
 * @GitHub: Savour Humor
 */
 # Canvas
+
+
+## 内容总括
+
+### HTMLCanvasElement
+
+
+### CanvasRenderingContext2D
+
+
+### CanvasGradient
+
+
+### ImageBitmap
+
+
+### ImageData 
+
+
+### TextMetries
+
+
+### CanvasImageSource
+
+
+### CanvasPattern
+
+
+### RenderingContext
+
+
 
 ## 全局操作
 

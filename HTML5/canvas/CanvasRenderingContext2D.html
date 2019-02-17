@@ -2,7 +2,7 @@
 * @Author: Zhang Guohua
 * @Date:   2018-10-24 14:32:41
 * @Last Modified by:   zgh
-* @Last Modified time: 2018-10-25 13:06:29
+* @Last Modified time: 2019-02-17 16:26:20
 * @Description: create by zgh
 * @GitHub: Savour Humor
 -->
@@ -15,142 +15,306 @@
 		body {
 			background: #fff;
 		}
+		canvas {
+			width: 200px;
+			height: 200px;
+			margin: 20px;
+			border: 1px dashed #76b17b;
+		}
 	</style>
 </head>
 <body>
-	<canvas id="canvas"></canvas>
+	<canvas id="first"></canvas>
+
+	<canvas id="create_rect"></canvas>
+
+	<canvas id="create_text"></canvas>
+
+	<canvas id="line_style"></canvas>
 
 <script type="text/javascript">
-	const el = document.getElementById('canvas');
-	el.width = 1000;
-	el.height = 800;
-	const canvas = el.getContext('2d');
+	const els = document.getElementsByTagName('canvas');
 
+	Array.prototype.slice.call(els).forEach(el => {
+		el.width = 200;
+		el.height = 200;
+	});
+	
 	// CanvasRenderingContext2D
-	// 属性：
+	// 
+	// 
+	// 属性，方法分类：
 	// 		
-	// 		canvas:
+	// 		矩形：
+	// 		clearRect(): 清除指定区域内部所有像素信息，变为初始色，透明。
+	// 		fillRect(): 填充矩形。颜色，渐变，图案。
+	// 		strokeRect(): 矩形描边。
 	// 		
-	// 		fillStyle: 填充样式。 颜色， 渐变， 图片/纹理。
-	// 		strokeStyle: 描边样式。 可以是路径， 形状，文字的描边。可以是颜色， 渐变，图案。
+	// 		文本：
+	// 		fillText(): 填充文本。
+	// 		strokeText(): 文字描边。
+	// 		measureText(): 文字测量。返回TextMetrics对象，该对象的width属性值就是字符占据的宽度。
 	// 		
-	// 		font: 字号， 字体。
-	// 		globalAlpha: 画布全局透明度。
-	// 		globalCompositeOperation: 混合模式。
-	// 		lineCap: butt, round, square
+	// 			
+	// 		线条样式：
+	// 		lineCap: butt(无端帽), round(圆形端帽), square(方形端帽)。 线端点样式。
 	// 		lineDashOffset: 虚线偏移距离
-	// 		lineJoin: 线转角，miter, round, bevel;
-	// 		lineWidth:
-	// 		miterLimit: 规定线转角为 miter 时，出现尖角的长度范围。
-	// 		shadowBlur: 阴影模糊程度
-	// 		shadowColor: 阴影颜色
-	// 		shadowOffsetX: 阴影的偏移
-	// 		shadowOffsetY
-	// 		textAlign: 指定文本对齐方式。
-	// 		textBaseLine: 
+	// 		lineJoin: 线转角样式，miter(尖角), round(圆角), bevel(平角);
+	// 		lineWidth: 线宽。主要用于描边。
+	// 		miterLimit: 规定线转角为 miter 时，出现尖角的长度范围。尖角限制比率。线条的尖角如果没有限制，在线条粗角度小的情况下会很长很长，因此，需要一个限制比率。默认是10。
+	// 		getLineDash(): 返回当前虚线数值。返回值是一个偶数个数的数组。
+	// 		setLineDash(): 设置线条为虚线。
+	// 		lineDashOffset(): 设置虚线的起始偏移。
 	// 		
-	// 方法：
-	// 		arc: 圆弧
+	// 		
+	// 		文本样式：
+	// 		font: 字号， 字体。设置字体相关样式，包括字号，字体信息。默认值是10px sans-serif。
+	// 		textAlign: 指定文本水平对齐方式。start（默认值），end，left，right以及center。
+	// 		textBaseLine: 设置文本基线对齐方式。支持属性值有：top，hanging，middle，alphabetic（默认值），ideographic，bottom。
+	// 		direction: 设置文本显示方向。支持属性值有：inherit（默认值），ltr和rtl。
+	// 		
+	// 		填充和描边：
+	// 		fillStyle: 填充样式。 颜色， 渐变， 图片/纹理。
+	// 		fill(): 填充。
+	// 		strokeStyle: 描边样式。 可以是路径， 形状，文字的描边。可以是颜色， 渐变，图案。
+	// 		stroke(): 描边。
+	// 		
+	// 		渐变相关：
+	// 		createLinearGradient: 创建线性渐变。
+	// 		createRadialGradient: 创建径向渐变。
+	// 		
+	// 		图案相关：
+	// 		createPattern: 创建图案。图案内容可以是图片，可以是<canvas>元素，也可以是渐变。此方法返回CanvasPattern对象。
+	// 		
+	// 		阴影相关：
+	// 		shadowBlur: 阴影模糊程度。 默认0；
+	// 		shadowColor: 阴影颜色。默认全透明黑色。
+	// 		shadowOffsetX: 阴影水平偏移，默认0；
+	// 		shadowOffsetY: 阴影垂直偏移，默认0；
+	// 		
+	// 		绘制路径：
+	// 		beginPath(): 开始一个新的路径。
+	// 		closePath(): 闭合一个路径。
+	// 		moveTo(): 路径绘制的起点。
+	// 		lineTo(): 绘制直线到坐标点。
+	// 		bezierCurveTo(): 绘制贝塞尔曲线到坐标。
+	// 		quadraticCurveTo(): 绘制二次贝塞尔曲线到指定坐标。
+	// 		arc(): 绘制圆弧
 	// 			param: (x, y, radius, startAngle, endAngle [, anticlockwise]) 顺逆时针。
-	// 		arcTo: 给路径添加圆弧，需要控制点和半径。绘制的圆弧为正圆的一部分，绝不可能是椭圆的一部分。
+	// 		arcTo: 给路径添加圆弧，需要控制点和半径。绘制的圆弧为正圆的一部分，绝不可能是椭圆的一部分。绘制圆弧，和之前的点以直线相连。
 	// 			param: (x1, y1, x2, y2, radius);
-	// 			
-	// 		closePath: 闭合路径
-	// 		stroke: 对路径进行描边。即路径的颜色。
-	// 		fill: 是填充闭合路径的样式。
+	// 		rect(): 绘制矩形路径。
+	// 		ellipse(): 绘制椭圆路径。
+	// 		clip(): 创建剪裁路径，之后绘制的路径只有在这里面，才会显示。
+	// 		
+	// 		位置检测：
+	// 		isPointInPath(): 当前点是否在指定路径内。
+	// 		isPointInStroke(): 当前点是否在路径描边上。
+	// 		
+	// 		变换：
+	// 		rotate(): 旋转。
+	// 		scale(): 缩放。
+	// 		translate(): 位移。
+	// 		transform(): 当前矩阵变换基础上再次矩阵变换。
+	// 		setTransform(): 直接重置为当前设置的矩阵变换。
+	// 		
+	// 		透明度和层级：
+	// 		globalAlpha: 全局透明度。
+	// 		globalCompositeOperation():设置图形叠加时候的混合方式，可以用来改变绘制元素上下叠加关系，也就是层级。
+	// 		
+	// 		图片与像素：
+	// 		drawImage(): 图片绘制在画布上。
+	// 		createImageData(): 创建一个新的空白的 ImageData 对象。
+	// 		getImageData(): 获取 Canvas 画布设定区域的 ImageData 对象。
+	// 		putImageData(): 给定的 ImageData 对象应用在 Canvas 画布上。
 	// 		
 	// 		
-	// 			
+	// 		Canvas 状态:
+	// 		save(): 存储当前状态。
+	// 		restore(): 恢复到前一次存储的状态。
+	// 		canvas: 反向识别当前上下文的 HTMLCanvasElement.
+	// 		
+	// 		
+	// 		其他方法：
+	// 		drawFocusIfNeeded(): 如果给定元素被聚焦，则该方法在当前路径周围绘制焦点环。
+	// 		scrollPathIntoView(): 将当前路径或给定路径滚动到视图中。
+	// 	
+	// 		
+	
+	// 19年之前的测试
 	// 
 	
+	function nineteen () {
+		const canvas = els[0].getContext('2d');
+		const el = els[0];
+		el.width = 1000;
+		el.height = 800;
+		//////
+		// 属性测试 
+		// 		 fillStyle: 填充样式。
+		// 		 globalAlpha: 全局透明度。
+		// 
+		//////
+		canvas.fillStyle = '#000';
+		canvas.globalAlpha = 1;
 
-	//////
-	// 属性测试 
-	// 
-	// 
-	//////
-	// fillStyle:
-	canvas.fillStyle = '#000';
+		// lineCap: 
+		function createCap(){
+			let center = [50, 50];
+			let length = 40, offset = 30;
 
-	// globalAlpha:
-	canvas.globalAlpha = 1;
+			// 绘制
+			canvas.lineWidth = 4;
+			canvas.lineCap = 'round';
+			for(let angle = 0; angle < 360; angle += 15){
+				let sin = Math.sin(angle/180 * Math.PI);
+				let cos = Math.cos(angle/180 * Math.PI);
 
-	// globalCompositeOperation:
-	// 原图 + 底图
-	// 
+				canvas.beginPath();
 
-	// lineCap: 
-	function createCap(){
-		let center = [50, 50];
-		let length = 40, offset = 30;
+				canvas.moveTo(center[0] + (center[0] - offset)*sin, center[1] - (center[1] - offset) * cos);
+				canvas.lineTo(center[0] + center[0]*sin, center[1] - center[1]* cos);
+				canvas.strokeStyle = `rgba(0, 0, 0, ${0.1 + angle*0.9/360})`;
 
-		// 绘制
-		canvas.lineWidth = 4;
-		canvas.lineCap = 'round';
-		for(let angle = 0; angle < 360; angle += 15){
-			let sin = Math.sin(angle/180 * Math.PI);
-			let cos = Math.cos(angle/180 * Math.PI);
-
-			canvas.beginPath();
-
-			canvas.moveTo(center[0] + (center[0] - offset)*sin, center[1] - (center[1] - offset) * cos);
-			canvas.lineTo(center[0] + center[0]*sin, center[1] - center[1]* cos);
-			canvas.strokeStyle = `rgba(0, 0, 0, ${0.1 + angle*0.9/360})`;
-
-			canvas.stroke();
-		}
-	}	
-	createCap();
-
-
-	// lineDashOffset
-	function createLineDash(){
-		let offset = 0;
-		let draw = function(){
-			canvas.clearRect(0, 0, el.width, el.height);
-			canvas.setLineDash([10, 5]);
-			canvas.lineDashOffset = offset;
-			canvas.strokeRect(2, 2, 100, 100);
-		};
-		var run = function(){
-			offset += 0.5;
-			if(offset > 24){
-				offset = 0;
+				canvas.stroke();
 			}
-			draw();
-			requestAnimationFrame(run);
-		};
-		run();
+		}	
+		// createCap();
+
+
+		// lineDashOffset
+		function createLineDash(){
+			let offset = 0;
+			let draw = function(){
+				canvas.clearRect(0, 0, el.width, el.height);
+				canvas.setLineDash([10, 5]);
+				canvas.lineDashOffset = offset;
+				canvas.strokeRect(2, 2, 100, 100);
+			};
+			var run = function(){
+				offset += 0.5;
+				if(offset > 24){
+					offset = 0;
+				}
+				draw();
+				requestAnimationFrame(run);
+			};
+			run();
+		}
+		// createLineDash();
+
+
+		//////
+		// 方法测试 
+		// 
+		// 
+		//////
+
+		// arcTo:
+		function createArcTo(){
+			canvas.clearRect(0, 0, el.width, el.height);
+
+			canvas.moveTo(0, 100);
+			canvas.lineTo(el.width, 100);
+
+			// let start1 = [0, Math.floor(Math.random() * el.height)];
+			// let end1 = [Math.floor(Math.random()*el.height), el.width];
+
+			// canvas.strokeStyle = 'green';
+			// canvas.lineWidth = 0.1;
+			// canvas.fillStyle = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, ${Math.random()})`;
+			// canvas.arcTo(start1[0], start1[1], end1[0], end1[1], 200);
+			canvas.stroke();
+			// canvas.fill();
+			
+		}	
+		createArcTo();
 	}
-	// createLineDash();
+	nineteen();
+	
+	//  绘制 Rect
+	//  
+	//  fillRect(x, y, width, height); 起点横纵坐标，宽高。
+	//  strokeRect(x, y, width, height);
+	//  
+	function createRect () {
 
+		const el = els[1];
+		el.width = 1000;
+		el.height = 800;
+		const context = el.getContext('2d');
+		let count = 0;
 
-	//////
-	// 方法测试 
+		context.fillStyle = 'green';
+		context.strokeStyle = 'red';
+
+		let timer = window.requestAnimationFrame(run);
+		function run() {
+			if(count < 100) {
+				count++;
+				context.clearRect(0, 0, el.width, el.height);
+				context.fillRect(200, 200, 100 + 3*count, 100 + 3*count);
+				context.strokeRect(200, 200, 100 + 3*count, 100 + 3*count);
+				timer = window.requestAnimationFrame(run);
+			}else{
+				window.cancelAnimationFrame(timer);
+			}
+		}
+	}
+	createRect();
+
+	// 绘制文本
 	// 
+	// fillText(string, x, y, maxWidth): 设置最大宽度，超出压缩文本显示。如果要自动换行，可以使用其封装的 wrapText();
+	// strokeText(string, x, y, maxWidth);
+	// measureText(text);测量文本的一些数据，返回TextMetrics对象，包含字符宽度等信息。 是实现文本换行的核心所在。此方法返回的字符宽度非常精准。 目前见了宽度信息。
 	// 
-	//////
+	function createText () {
+		const el = els[2];
+		const context = el.getContext('2d');
+
+		context.font = '30px serif';
+		context.strokeStyle = 'red';
+		context.fillText('zgh, hahaha', 20, 50, 1000);
+		context.strokeText('zgh, hahaha', 20, 80, 1000);
+
+		let info = context.measureText('zgh, hahaha');
+		console.log(info); // width: 
+
+	}
+	createText();
+
+	// 线条
+	// 
+	// 静态属性，样式设置。
+	// 		lineWidth: 负数会被忽略。
+	// 		lineCap: butt 默认值端点没有图形, round 端点延伸一个圆头。 square 端点延伸一个方框。 
+	// 		
+	// 
+	function lineStyle () {
+		const el = els[3];
+		const context = el.getContext('2d');
+
+		context.lineWidth = 6;
+		context.lineCap = 'butt';
+
+		context.beginPath();
+		context.moveTo(10, 10);
+		context.lineTo(100, 10);
+		context.closePath();
+
+		context.lineCap = 'round';
+		context.beginPath();
+		context.moveTo(10, 30);
+		context.lineTo(100, 30);
+		context.closePath();
+
+		context.stroke();
 
 
-	// arcTo:
-	function createArcTo(){
-		canvas.clearRect(0, 0, el.width, el.height);
+	}
+	lineStyle();
 
-		canvas.moveTo(0, 100);
-		canvas.lineTo(el.width, 100);
-
-		// let start1 = [0, Math.floor(Math.random() * el.height)];
-		// let end1 = [Math.floor(Math.random()*el.height), el.width];
-
-		// canvas.strokeStyle = 'green';
-		// canvas.lineWidth = 0.1;
-		// canvas.fillStyle = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, ${Math.random()})`;
-		// canvas.arcTo(start1[0], start1[1], end1[0], end1[1], 200);
-		canvas.stroke();
-		// canvas.fill();
-		
-	}	
-	createArcTo();
 
 </script>
 </body>
