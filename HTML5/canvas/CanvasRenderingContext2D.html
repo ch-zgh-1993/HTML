@@ -2,7 +2,7 @@
 * @Author: Zhang Guohua
 * @Date:   2018-10-24 14:32:41
 * @Last Modified by:   zgh
-* @Last Modified time: 2019-02-17 16:26:20
+* @Last Modified time: 2019-02-19 10:45:52
 * @Description: create by zgh
 * @GitHub: Savour Humor
 -->
@@ -32,6 +32,12 @@
 
 	<canvas id="line_style"></canvas>
 
+	<canvas id="extra"></canvas>
+
+	<canvas id="create_path"></canvas>
+
+	<canvas id="transform"></canvas>	
+
 <script type="text/javascript">
 	const els = document.getElementsByTagName('canvas');
 
@@ -40,106 +46,6 @@
 		el.height = 200;
 	});
 	
-	// CanvasRenderingContext2D
-	// 
-	// 
-	// 属性，方法分类：
-	// 		
-	// 		矩形：
-	// 		clearRect(): 清除指定区域内部所有像素信息，变为初始色，透明。
-	// 		fillRect(): 填充矩形。颜色，渐变，图案。
-	// 		strokeRect(): 矩形描边。
-	// 		
-	// 		文本：
-	// 		fillText(): 填充文本。
-	// 		strokeText(): 文字描边。
-	// 		measureText(): 文字测量。返回TextMetrics对象，该对象的width属性值就是字符占据的宽度。
-	// 		
-	// 			
-	// 		线条样式：
-	// 		lineCap: butt(无端帽), round(圆形端帽), square(方形端帽)。 线端点样式。
-	// 		lineDashOffset: 虚线偏移距离
-	// 		lineJoin: 线转角样式，miter(尖角), round(圆角), bevel(平角);
-	// 		lineWidth: 线宽。主要用于描边。
-	// 		miterLimit: 规定线转角为 miter 时，出现尖角的长度范围。尖角限制比率。线条的尖角如果没有限制，在线条粗角度小的情况下会很长很长，因此，需要一个限制比率。默认是10。
-	// 		getLineDash(): 返回当前虚线数值。返回值是一个偶数个数的数组。
-	// 		setLineDash(): 设置线条为虚线。
-	// 		lineDashOffset(): 设置虚线的起始偏移。
-	// 		
-	// 		
-	// 		文本样式：
-	// 		font: 字号， 字体。设置字体相关样式，包括字号，字体信息。默认值是10px sans-serif。
-	// 		textAlign: 指定文本水平对齐方式。start（默认值），end，left，right以及center。
-	// 		textBaseLine: 设置文本基线对齐方式。支持属性值有：top，hanging，middle，alphabetic（默认值），ideographic，bottom。
-	// 		direction: 设置文本显示方向。支持属性值有：inherit（默认值），ltr和rtl。
-	// 		
-	// 		填充和描边：
-	// 		fillStyle: 填充样式。 颜色， 渐变， 图片/纹理。
-	// 		fill(): 填充。
-	// 		strokeStyle: 描边样式。 可以是路径， 形状，文字的描边。可以是颜色， 渐变，图案。
-	// 		stroke(): 描边。
-	// 		
-	// 		渐变相关：
-	// 		createLinearGradient: 创建线性渐变。
-	// 		createRadialGradient: 创建径向渐变。
-	// 		
-	// 		图案相关：
-	// 		createPattern: 创建图案。图案内容可以是图片，可以是<canvas>元素，也可以是渐变。此方法返回CanvasPattern对象。
-	// 		
-	// 		阴影相关：
-	// 		shadowBlur: 阴影模糊程度。 默认0；
-	// 		shadowColor: 阴影颜色。默认全透明黑色。
-	// 		shadowOffsetX: 阴影水平偏移，默认0；
-	// 		shadowOffsetY: 阴影垂直偏移，默认0；
-	// 		
-	// 		绘制路径：
-	// 		beginPath(): 开始一个新的路径。
-	// 		closePath(): 闭合一个路径。
-	// 		moveTo(): 路径绘制的起点。
-	// 		lineTo(): 绘制直线到坐标点。
-	// 		bezierCurveTo(): 绘制贝塞尔曲线到坐标。
-	// 		quadraticCurveTo(): 绘制二次贝塞尔曲线到指定坐标。
-	// 		arc(): 绘制圆弧
-	// 			param: (x, y, radius, startAngle, endAngle [, anticlockwise]) 顺逆时针。
-	// 		arcTo: 给路径添加圆弧，需要控制点和半径。绘制的圆弧为正圆的一部分，绝不可能是椭圆的一部分。绘制圆弧，和之前的点以直线相连。
-	// 			param: (x1, y1, x2, y2, radius);
-	// 		rect(): 绘制矩形路径。
-	// 		ellipse(): 绘制椭圆路径。
-	// 		clip(): 创建剪裁路径，之后绘制的路径只有在这里面，才会显示。
-	// 		
-	// 		位置检测：
-	// 		isPointInPath(): 当前点是否在指定路径内。
-	// 		isPointInStroke(): 当前点是否在路径描边上。
-	// 		
-	// 		变换：
-	// 		rotate(): 旋转。
-	// 		scale(): 缩放。
-	// 		translate(): 位移。
-	// 		transform(): 当前矩阵变换基础上再次矩阵变换。
-	// 		setTransform(): 直接重置为当前设置的矩阵变换。
-	// 		
-	// 		透明度和层级：
-	// 		globalAlpha: 全局透明度。
-	// 		globalCompositeOperation():设置图形叠加时候的混合方式，可以用来改变绘制元素上下叠加关系，也就是层级。
-	// 		
-	// 		图片与像素：
-	// 		drawImage(): 图片绘制在画布上。
-	// 		createImageData(): 创建一个新的空白的 ImageData 对象。
-	// 		getImageData(): 获取 Canvas 画布设定区域的 ImageData 对象。
-	// 		putImageData(): 给定的 ImageData 对象应用在 Canvas 画布上。
-	// 		
-	// 		
-	// 		Canvas 状态:
-	// 		save(): 存储当前状态。
-	// 		restore(): 恢复到前一次存储的状态。
-	// 		canvas: 反向识别当前上下文的 HTMLCanvasElement.
-	// 		
-	// 		
-	// 		其他方法：
-	// 		drawFocusIfNeeded(): 如果给定元素被聚焦，则该方法在当前路径周围绘制焦点环。
-	// 		scrollPathIntoView(): 将当前路径或给定路径滚动到视图中。
-	// 	
-	// 		
 	
 	// 19年之前的测试
 	// 
@@ -289,33 +195,196 @@
 	// 静态属性，样式设置。
 	// 		lineWidth: 负数会被忽略。
 	// 		lineCap: butt 默认值端点没有图形, round 端点延伸一个圆头。 square 端点延伸一个方框。 
+	// 		lineDashOffset: 设置虚线偏移值。 cap 会影响该属性。
+	// 		lineJoin: 线转角样式，miter(尖角), round(圆角), bevel(平角);
+	// 		miterLimit: 限制出现长角的长度范围，如果超出，则平角显示。不超出，则是尖角。 默认为10。
 	// 		
+	// 方法：
+	// 		setLineDash([x, y]): 表示虚线的实线 x和透明长度 y。 如果是 [] ， 那么表示实线。
+	// 		getLineDash(): 获取当前画布的 lineDash 值。
+	// 		
+	// 其他内容：
+	// 		beginPath() 开始一个新的路径，如果没有 stroke, 直接再次开始，那么只会绘制最后一个 beginPath 的路径。
 	// 
 	function lineStyle () {
 		const el = els[3];
 		const context = el.getContext('2d');
-
 		context.lineWidth = 6;
+		// lineCap
 		context.lineCap = 'butt';
-
 		context.beginPath();
 		context.moveTo(10, 10);
 		context.lineTo(100, 10);
-		context.closePath();
+		context.stroke();
 
 		context.lineCap = 'round';
 		context.beginPath();
 		context.moveTo(10, 30);
 		context.lineTo(100, 30);
-		context.closePath();
-
+		context.stroke();
+		
+		context.lineCap = 'square';
+		context.beginPath();
+		context.moveTo(10, 50);
+		context.lineTo(100, 50);
 		context.stroke();
 
+		context.strokeStyle = 'red';
+		context.lineWidth = 3;
+		context.lineCap = 'butt';
+		// lineDashOffset
+		context.lineDashOffset = 0;
+		context.beginPath();
+		context.setLineDash([20, 20]);
+		context.moveTo(10, 70);
+		context.lineTo(180, 70);
+		context.stroke();
+		context.lineDashOffset = 5;
+		context.beginPath();
+		context.setLineDash([10, 10]);
+		context.moveTo(10, 74);
+		context.lineTo(180, 74);
+		context.stroke();
+
+		console.info(context.getLineDash());
+		console.info(context.lineDashOffset);
+
+		context.strokeStyle = 'orange';
+		context.lineWidth = 5;
+		context.lineCap = 'butt';
+		context.lineDashOffset = 0;
+		context.setLineDash([]);
+		// lineJoin: 默认miter(尖角), round(圆角), bevel(平角);
+		context.beginPath();
+		context.moveTo(10, 80);
+		context.lineTo(40, 100);
+		context.lineTo(100, 80);
+		context.stroke();
+
+		context.lineJoin = 'bevel';
+		context.beginPath();
+		context.moveTo(10, 90);
+		context.lineTo(40, 110);
+		context.lineTo(100, 90);
+		context.stroke();
+
+		context.lineJoin = 'round';
+		context.beginPath();
+		context.moveTo(10, 100);
+		context.lineTo(40, 120);
+		context.lineTo(100, 100);
+		context.stroke();
+
+		context.lineJoin = 'miter';
+		context.miterLimit = 10;
+		context.beginPath();
+		context.moveTo(33, 130);
+		context.lineTo(40, 180);
+		context.lineTo(47, 130);
+		context.stroke();
+
+		context.beginPath();
+		context.moveTo(33, 180);
+		context.lineTo(40, 180);
+		context.lineTo(47, 180);
+		context.stroke();
 
 	}
 	lineStyle();
 
 
+	// 其他内容测试：
+	// 		1. createPattern(image, repetition): 创建图案对象。 可以指定平铺方案。
+	// 			image: img 元素， video 元素， canvas 元素，CanvasRenderingContext2D， ImageBitmap， ImageData， Blob.
+	// 			repetition:  repeat 水平垂直平铺。 repeat-x， repeat-y, no-repeat 不平铺。
+	// 
+	function extra() {
+		const el = els[4];
+		const context = el.getContext('2d');
+
+		// createPattern
+		var img = new Image();
+		img.onload = function() {
+			// 我们创建一个Canvas元素
+		    var canvasCreated = document.createElement('canvas');
+		    canvasCreated.width = 50;
+		    canvasCreated.height = 34;
+		    canvasCreated.getContext('2d').drawImage(this, 0, 0, 50, 34);
+		    // 创建纹理并填充，顺便测试null是否渲染为'repeat'
+			var pattern = context.createPattern(canvasCreated, null);
+		    context.fillStyle = pattern;
+		    context.fillRect(0, 0, 200, 200);   
+		    
+		    // 假如直接 drawImage， 则是将图片画在了 canvas 上。
+		    // context.drawImage(this, 0, 0, 50, 34);
+		}
+		img.src = 'zhang.png';
+
+	}
+	extra();
+
+	// 绘制路径:
+	// 
+	// bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y): 第一个控制点，第二个控制点，结束点。 起点使用当前点。如果没有，可以使用 moveTo 作为起点。
+	// 		可以绘制各种曲线图形，包括正规的圆，椭圆等。
+	// 		
+	// 		
+	// quadraticCurveTo(cpx, cpy, x, y): 只需要三个点，除了起点，一个控制点，一个结束点。
+	//   
+	
+	function createPath () {
+		const el = els[5];
+		const context = el.getContext('2d');
+
+		context.beginPath();
+		context.moveTo(2, 8);
+		context.bezierCurveTo(4, 0, 6, 8, 7, 27);
+		context.stroke();
+
+	}
+	createPath();
+
+	// 变换
+	// 
+	// 以下变换默认的坐标点为 0,0 如果想要变换坐标位置，可以通过 translate() 方法.
+	// 		
+	// rotate(弧度): 默认旋转点为 0,0 顺时针方向，单位为弧度。 与 CSS 的旋转变换不同，旋转的为坐标系，而不是元素。因此，实际开发的时候，旋转完毕，需要将坐标系再还原。旋转之后进行操作。操作完成，还原坐标。
+	// 
+	// scale(x, y): 缩放Canvas画布的坐标系，只是影响坐标系，之后的绘制会受此方法影响，但之前已经绘制好的效果不会有任何变化。
+	// 
+	// translate(x, y): 对 Canvas 坐标系进行位移。 变换其他坐标的中心点。
+	// 
+	// transform(a水平缩放, b水平斜切, c垂直斜切, d垂直缩放, e水平位移, f垂直位置 ): 对当前坐标系进行进一步变换。以实现缩放，旋转，拉伸，位移的效果。 与 setTransform 的唯一区别，后者一旦执行，会完全重置已有的变换。transform 则是累加。
+	// 
+	// setTransform(): 重置已有变化，在进行变换。
+	// 
+	function transform () {
+		const el = els[6];
+		const context = el.getContext('2d');
+
+		let angle = 40;
+		context.translate(100, 100);
+		context.font = '30px serif';
+
+		function run() {
+			context.clearRect(-100, -100, 200, 200);
+			context.fillText('zgh', 0, 0);
+			if(angle > 360){
+				angle = 10;
+			}else {
+				angle += 10;	
+			}
+			context.rotate(angle * Math.PI/180);
+			// requestAnimationFrame(run);
+			
+			// 下一帧时画的，所以必须写进方法中
+			context.scale(5, 2.5);
+			context.fillRect(10, 10, 10, 10);
+		}
+		requestAnimationFrame(run);
+
+	}
+	transform();
 </script>
 </body>
 </html>
